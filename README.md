@@ -1,7 +1,6 @@
-# MySoftware
+# Chat-80
 
-This repository contains the archived source code of MySoftware, a legacy Software developped as of 1970 at UniversityName. 
-MySoftware source code can be discovered via two different angles, materialized as two different branches. 
+Chat-80 is a natural language question-answering system on geographical data, created by David Warren and Fernando Pereira in 1982, at Sanford Research Institute.
 
 ## Main Branch
 
@@ -12,9 +11,6 @@ The original finds are stored in the Depository containing the raw materials and
 - Folder [metadata](/.metadata) holds various files with meta information to be updated throughout the process. 
 
 
-## SourceCode Branch
-The SourceCode branch contains the reconstructed synthetic development history of MySoftware. 
-Each version of the source code has been stacked one upon the other using successive commits. 
 
 
 # The process
@@ -24,12 +20,6 @@ This repository was created with the support of the Software Heritage Acquisitio
 For general considerations about the process, check out the [SWHAP guide](https://www.softwareheritage.org/swhap/) as initially published in 2019 with UNESCO.
 For a detailed step by step description of the process, check out the [SWHAP-CLI](https://github.com/SoftwareHeritage/swhapguide/blob/master/SwhapGuide-GitHub-CLI.pdf). The SWHAP@Inria guide is itself a simplified version of the step by step [SHWAP@Pisa guide](https://github.com/SoftwareHeritage/swhapguide/blob/master/SWHAP%40Pisa.pdf) published by the university of Pisa.
 
-
-# Template (remove this section in final version)
-**This directory is a _template_ to be copied out, not run in place.** Make a copy of this template for each legqcy Sofware you want to archive in the Software Heritage Universal Archive.
-This template comes with Github Actions, scripts that will automate part of your archival process.
-
-TBC
 
 
 
