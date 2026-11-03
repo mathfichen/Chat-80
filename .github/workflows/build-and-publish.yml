@@ -63,16 +63,20 @@ jobs:
           git push "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" main        
 
 
-      - name: Build history to a candidate ref (bit-reproducible, D4; tags created)
-        id: build
+      - name: Build (with traceback)
         run: |
-          set -eo pipefail
-          EPOCH="$(cat metadata/curation-epoch)"
-          swhap build --workbench . --model P --apply \
-            --curation-epoch "$EPOCH" \
-            --json | tee apply.json
-          REF="$(jq -er '.branch_ref' apply.json)"
-          echo "candidate_ref=$REF" >> "$GITHUB_OUTPUT"
+          python3 - <<'EOF'
+          import traceback
+          from swhap_core.history import do_build
+          from swhap_core.journal import new_ulid
+          from swhap_core.model import CurationTimestamp
+          try:
+              epoch = int(open("metadata/curation-epoch").read().strip())
+              do_build(".", "P", CurationTimestamp(epoch, "+0000"), run_id=new_ulid(), scratch=False, plan_out=None)
+          except Exception:
+              traceback.print_exc()
+              raise
+          EOF
 
       - name: Create local SourceCode branch from candidate
         run: |
