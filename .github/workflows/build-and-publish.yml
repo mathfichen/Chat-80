@@ -63,21 +63,6 @@ jobs:
           git push "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" main        
 
 
-      - name: Build (with traceback)
-        run: |
-          python3 - <<'EOF'
-          import traceback
-          from swhap_core.history import do_build
-          from swhap_core.journal import new_ulid
-          from swhap_core.model import CurationTimestamp
-          try:
-              epoch = int(open("metadata/curation-epoch").read().strip())
-              do_build(".", "P", CurationTimestamp(epoch, "+0000"), run_id=new_ulid(), scratch=False, plan_out=None)
-          except Exception:
-              traceback.print_exc()
-              raise
-          EOF
-
       - name: Build history to a candidate ref
         id: build
         run: |
