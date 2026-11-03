@@ -73,6 +73,14 @@ jobs:
             --json | tee apply.json
           echo "candidate_ref=$(jq -er '.branch_ref' apply.json)" >> "$GITHUB_OUTPUT"         
 
+      - name: Save the diary
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add metadata/journal.jsonl metadata/plan.json
+          git commit -m "ci: save journal"
+          git push "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" main
+          
       - name: Debug journal
         run: |
           ls -la metadata
