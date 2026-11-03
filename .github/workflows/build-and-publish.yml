@@ -80,11 +80,7 @@ jobs:
           git add metadata/journal.jsonl
           git commit -m "ci: save journal"
           git push "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" main
-          
-      - name: Debug journal
-        run: |
-          ls -la metadata
-          cat metadata/journal.jsonl 2>&1 | head -c 1500         
+              
 
       - name: Create local SourceCode branch from candidate
         run: |
