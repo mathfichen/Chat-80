@@ -66,11 +66,13 @@ jobs:
       - name: Build history to a candidate ref (bit-reproducible, D4; tags created)
         id: build
         run: |
+          set -eo pipefail
           EPOCH="$(cat metadata/curation-epoch)"
           swhap build --workbench . --model P --apply \
             --curation-epoch "$EPOCH" \
             --json | tee apply.json
-          echo "candidate_ref=$(jq -r '.branch_ref' apply.json)" >> "$GITHUB_OUTPUT"
+          REF="$(jq -er '.branch_ref' apply.json)"
+          echo "candidate_ref=$REF" >> "$GITHUB_OUTPUT"
 
       - name: Create local SourceCode branch from candidate
         run: |
