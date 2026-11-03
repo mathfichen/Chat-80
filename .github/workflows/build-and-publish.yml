@@ -73,7 +73,7 @@ jobs:
             --json | tee apply.json
           echo "candidate_ref=$(jq -er '.branch_ref' apply.json)" >> "$GITHUB_OUTPUT"         
 
-      - name: Save the diary
+      - name: Commit journal to main
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
