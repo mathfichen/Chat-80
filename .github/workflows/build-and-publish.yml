@@ -78,6 +78,16 @@ jobs:
               raise
           EOF
 
+      - name: Build history to a candidate ref
+        id: build
+        run: |
+          set -eo pipefail
+          EPOCH="$(cat metadata/curation-epoch)"
+          swhap build --workbench . --model P \
+            --curation-epoch "$EPOCH" \
+            --json | tee apply.json
+          echo "candidate_ref=$(jq -er '.branch_ref' apply.json)" >> "$GITHUB_OUTPUT"         
+
       - name: Create local SourceCode branch from candidate
         run: |
           git branch -f SourceCode "${{ steps.build.outputs.candidate_ref }}"
