@@ -1,6 +1,7 @@
 # Chat-80
 
 Chat-80 is a natural language question-answering system on geographical data, created by David Warren and Fernando Pereira in 1982, at Sanford Research Institute.
+An article was published about it by the authors in July 1982: ["An efficient adaptable system for interpreting natural language queries"](https://dl.acm.org/doi/10.5555/972942.972944), Computational Linguistics, Volume 8, Issue 3-4, pp. 110-122.
 
 The code has been identified by the [Software Preservation Group](https://softwarepreservation.computerhistory.org/prolog/) and preserved thanks to Fernando Pereira's archived webpage. 
 
