@@ -6,7 +6,7 @@ The code has been identified by the [Software Preservation Group](https://softwa
 
 ## Main Branch
 
-The main branch contains the original materials as well as the metada linked to mySoftware. 
+The main branch contains the original materials as well as the metada linked to Chat-80. 
 The original finds are stored in the Depository containing the raw materials and the browsable source.
 - Folder [raw materials](./raw_materials) is for the original source code materials, as they have been found or submitted.
 - Folder [source_code](./source_code) is for a machine readable version of the source code. Source files, with the right extension, have to be accessible through the GitHub web interface, e.g., archives should be decompressed, code should be transcribed if provided by images, etc.This folder serves as a base for the reconstruction of the development history as a git repository.
