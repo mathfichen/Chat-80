@@ -1,4 +1,4 @@
-name: Validate PR (inspect + dry-run build + compliance gate)
+name: Dryrun
 
 # ┌─ DRAFT — reference shape, not yet the production workflow ──────────────────┐
 # │ This runs an untrusted extract+build, so it MUST stay secrets-free (C1):    │
@@ -63,6 +63,46 @@ jobs:
           for t in $(jq -r '.tags[].release_tag' build-apply.json); do
             git tag -f "$t" "$(jq -r --arg t "$t" '.tags[] | select(.release_tag==$t) | .tag_ref' build-apply.json)"
           done
+
+      - name: Export repo snapshot (for curator review)
+        run: |
+          python3 - <<'EOF'
+          import json, subprocess
+
+          def git(*a):
+              return subprocess.run(["git", *a], capture_output=True, text=True, check=True).stdout
+
+          def tree(ref):
+              out = []
+              for line in git("ls-tree", "-r", "-l", ref).splitlines():
+                  meta, path = line.split("\t", 1)
+                  mode, typ, sha, size = meta.split()
+                  out.append({"path": path, "mode": mode, "blob": sha,
+                              "size": None if size == "-" else int(size)})
+              return out
+
+          snap = {
+              "branches": git("for-each-ref", "--format=%(refname)", "refs/heads/").split(),
+              "tags": [
+                  {"ref": r, "type": t}
+                  for r, t in (l.split(" ") for l in git(
+                      "for-each-ref", "--format=%(refname) %(objecttype)", "refs/tags/").splitlines())
+              ],
+          }
+          try:
+              snap["SourceCode"] = {
+                  "commits": [
+                      dict(zip(("sha", "date", "author", "message"), l.split("\t", 3)))
+                      for l in git("log", "SourceCode", "--format=%H%x09%cI%x09%an%x09%s").splitlines()
+                  ],
+                  "tree": tree("SourceCode"),
+              }
+          except subprocess.CalledProcessError:
+              snap["SourceCode"] = None
+          snap["main_tree"] = tree("HEAD")
+
+          json.dump(snap, open("repo-snapshot.json", "w"), indent=2)
+          EOF          
             
 
       - name: Compliance gate (TF / BP / CSV / CM / SZ / PI) — RED FAILS
@@ -78,6 +118,6 @@ jobs:
           name: swhap-validation
           path: |
             inspect.json
-            plan.json
-            build-plan.json
+            repo-snapshot.json
             validator-report.json
+
