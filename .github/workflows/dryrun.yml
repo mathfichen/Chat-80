@@ -102,7 +102,7 @@ jobs:
           snap["main_tree"] = tree("HEAD")
 
           json.dump(snap, open("repo-snapshot.json", "w"), indent=2)
-          EOF          
+          EOF
             
 
       - name: Compliance gate (TF / BP / CSV / CM / SZ / PI) — RED FAILS
