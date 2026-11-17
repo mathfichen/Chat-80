@@ -13,11 +13,7 @@ name: Validate PR (inspect + dry-run build + compliance gate)
 # generator is never rubber-stamped.
 
 on:
-  pull_request:
-    paths:
-      - "raw_materials/**"
-      - "metadata/version_history.csv"
-      - "metadata/extraction-recipe.yaml"   # extraction-only; NOT the history authority
+  workflow_dispatch:
 
 permissions:
   contents: read          # C1: read-only, no secrets in this untrusted-build job
