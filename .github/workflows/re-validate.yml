@@ -1,4 +1,4 @@
-name: re-validate (workbench compliance heartbeat)
+name: re-validate
 
 # ┌─ DRAFT — reference shape, not yet the production workflow ──────────────────┐
 # │ A provisioned workbench keeps its OWN copy of the compliance gate so that a │
